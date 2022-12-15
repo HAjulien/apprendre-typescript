@@ -78,8 +78,12 @@ function identity<ArgTypes>(arg: ArgTypes) : ArgTypes {
 const aa = identity<number>(3)
 const bb = identity("test")
 
-function first<Type>(arg : Type[]) : Type {
-    return arg[0]
+function first<Type>(arg : Type[]) : Type | null {
+    if(arg[0]){
+        return arg[0]
+    }
+
+    return null
 }
 
 const cc = first(["abc", "def", 3])
@@ -193,3 +197,67 @@ class Carre {
     }
 }
 
+//-Interface only Object---------------------------------------------------------------------------------------------
+
+interface Point {
+    x : number
+}
+
+//fusion
+interface Point {
+    y : number
+}
+
+//modifier object global Window
+interface Window {
+    googleAnalytics : string
+}
+
+window.googleAnalytics
+
+class TwoDimensionPoint implements Point{
+    x = 2
+    y = 2
+}
+
+function draw(p : Point){
+
+}
+
+draw( new TwoDimensionPoint() )
+
+//tuple array taille fixe
+const aaa = [1, 2, 3] as const
+
+const bbb : [string, number] = ['tomate', 4] 
+const ccc : (string | number)[] = [55, 'azert']
+
+type ListItem = [string, number]
+
+const abc : ListItem = ["tomate", 22]
+const bcs : ListItem = ["banane", 3]
+const cba : string[] = []
+
+function merge<T extends unknown[], U extends unknown[]>(a : T, b : U) : [...T, ...U] {
+    return [...a, ...b]
+}
+
+const aab = merge(abc, bcs)
+const aac = merge(abc, [1, 2, 4])
+
+if(cba[0]){
+    console.log(cba[0].toUpperCase());
+}
+console.log(bcs[0].toUpperCase());
+
+//emun--------------------------------------------------------------------------------------
+
+const enum STEPS{
+    Intro,
+    Selection,
+    Panier,
+    Paiement
+}
+
+const step : STEPS = STEPS.Selection
+console.log(step)
